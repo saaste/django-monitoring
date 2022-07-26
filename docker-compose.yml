@@ -1,0 +1,37 @@
+version: "3.7"
+
+services:
+  app_1:
+    container_name: app1
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8000:8000"
+    command: python manage.py runserver 0.0.0.0:8000
+  
+  app_2:
+    container_name: app2
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8080:8080"
+    command: python manage.py runserver 0.0.0.0:8080
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+    ports:
+      - "9090:9090"
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    volumes:
+      - ./grafana/:/var/lib/grafana/
+    ports:
+      - "3000:3000"
+    #restart: unless-stopped

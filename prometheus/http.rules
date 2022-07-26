@@ -1,0 +1,7 @@
+groups:
+  - name: http
+    rules:
+    - record: django_http_requests_before_middlewares_by_job:rate60s
+      expr: sum(rate(django_http_requests_before_middlewares_total[60s])) BY (job)
+    - record: django_http_requests_before_middlewares_by_instance:rate60s
+      expr: sum(rate(django_http_requests_before_middlewares_total[60s])) BY (instance)
