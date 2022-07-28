@@ -31,6 +31,8 @@ ALLOWED_HOSTS = ["localhost", "nginx"]
 # Application definition
 
 INSTALLED_APPS = [
+    'dogs.apps.DogsConfig',
+    'cats.apps.CatsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
