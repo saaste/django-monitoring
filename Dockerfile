@@ -7,4 +7,7 @@ RUN pip install -r requirements.txt
 COPY ./my_app /app
 WORKDIR /app
 
+# Shared prometheus metrics folder. This is configured in uwsgi.ini
+RUN mkdir /app/metrics
+
 RUN python manage.py migrate

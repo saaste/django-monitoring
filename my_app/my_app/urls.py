@@ -18,6 +18,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path('dogs/', include('dogs.urls')),
+    path('cats/', include('cats.urls')),
     path('admin/', admin.site.urls),
     path('', include('django_prometheus.urls')),
 ]
