@@ -1,4 +1,5 @@
 import json
+# from time import sleep
 from django.http import HttpResponse, JsonResponse, Http404
 from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
@@ -7,6 +8,7 @@ from .models import Dog
 @csrf_exempt
 def index(request):
     if request.method == "GET":
+        # sleep(2)
         dogs = list(Dog.objects.all().values())
         return JsonResponse(dogs, safe=False, json_dumps_params={"ensure_ascii": False})
     

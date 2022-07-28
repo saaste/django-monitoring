@@ -14,6 +14,16 @@ services:
     #command: uwsgi --module my_app.wsgi --socket 0.0.0.0:8001 --master --processes=2 -b 131072
     command: uwsgi --ini uwsgi.ini
   
+  uwsgi_exporter:
+    container_name: uwsgi_exporter
+    image: timonwong/uwsgi-exporter
+    ports:
+      - "9117:9117"
+    command:
+      - "--stats.uri=http://app_1:1717"
+    depends_on:
+      - "app_1"    
+
   prometheus:
     container_name: prometheus
     image: prom/prometheus:latest
@@ -21,6 +31,9 @@ services:
       - ./prometheus/:/etc/prometheus/
     ports:
       - "9090:9090"
+    depends_on:
+      - "app_1"
+      - "uwsgi_exporter"
 
   grafana:
     container_name: grafana
@@ -29,6 +42,8 @@ services:
       - ./grafana/:/var/lib/grafana/
     ports:
       - "3000:3000"
+    depends_on:
+      - "prometheus"
     #restart: unless-stopped
 
   nginx:
