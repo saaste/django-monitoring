@@ -18,13 +18,15 @@ def index(request):
         name = body["name"]
         breed = body["breed"]
         likes_to_drop_things = body.get("likes_to_drop_things", False)
+        is_test = body.get("is_test", False)
         
         new_cat = Cat.objects.create(
             name=name,
             breed=breed,
-            likes_to_drop_things=likes_to_drop_things
+            likes_to_drop_things=likes_to_drop_things,
+            is_test=is_test
         )
-        return JsonResponse(model_to_dict(new_cat), safe=False)
+        return JsonResponse(model_to_dict(new_cat), safe=False, status=201)
 
 @csrf_exempt
 def details(request, id):
@@ -52,3 +54,7 @@ def details(request, id):
     elif request.method == "DELETE":
         cat.delete()
         return HttpResponse(status=200)
+
+def clean(request):
+    Cat.objects.filter(is_test=True).delete()
+    return HttpResponse(status=200)

@@ -19,13 +19,15 @@ def index(request):
         name = body["name"]
         breed = body["breed"]
         likes_to_bark = body.get("likes_to_bark", False)
+        is_test = body.get("is_test", False)
         
         new_dog = Dog.objects.create(
             name=name,
             breed=breed,
-            likes_to_bark=likes_to_bark
+            likes_to_bark=likes_to_bark,
+            is_test=is_test
         )
-        return JsonResponse(model_to_dict(new_dog), safe=False)
+        return JsonResponse(model_to_dict(new_dog), safe=False, status=201)
 
 @csrf_exempt
 def details(request, id):
@@ -53,3 +55,7 @@ def details(request, id):
     elif request.method == "DELETE":
         dog.delete()
         return HttpResponse(status=200)
+
+def clean(request):
+    Dog.objects.filter(is_test=True).delete()
+    return HttpResponse(status=200)
