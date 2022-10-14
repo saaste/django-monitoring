@@ -23,7 +23,7 @@ This will start five Docker containers:
 | Name           | Description                   |
 | -------------- | ----------------------------- |
 | app            | Django application            |
-| uwsgi          | uWSGI                         |
+| grafana        | Grafana
 | nginx          | Nginx HTTP server             |
 | prometheus     | Prometheus monitoring system  |
 | uwsgi_exporter | uWSGI metric exporter         |
